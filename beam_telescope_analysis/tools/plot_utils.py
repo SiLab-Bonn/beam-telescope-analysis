@@ -1183,7 +1183,7 @@ def pixels_plot_2d(fig, ax, regions, vertices, values, z_min=0, z_max=None):
     return ax.figure
 
 
-def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_2d_hist, count_tracks_with_hit_2d_hist, stat_2d_x_residuals_hist, stat_2d_y_residuals_hist, stat_2d_residuals_hist, count_1d_charge_hist, stat_2d_charge_hist, count_1d_frame_hist, stat_2d_frame_hist, stat_2d_cluster_size_hist, count_1d_total_angle_hist, count_1d_total_angle_hist_edges, count_1d_alpha_angle_hist, count_1d_alpha_angle_hist_edges, count_1d_beta_angle_hist, count_1d_beta_angle_hist_edges, stat_2d_total_angle_hist, stat_2d_alpha_angle_hist, stat_2d_beta_angle_hist, stat_2d_efficiency_hist, stat_pixel_efficiency_hist, count_pixel_hits_2d_hist, efficiency, actual_dut_index, dut_extent, hist_extent, plot_range, efficiency_regions, efficiency_regions_names, efficiency_regions_efficiency, efficiency_regions_count_1d_charge_hist, efficiency_regions_count_1d_frame_hist, efficiency_regions_count_1d_cluster_size_hist, efficiency_regions_count_1d_total_angle_hist, efficiency_regions_count_1d_total_angle_hist_edges, efficiency_regions_count_1d_alpha_angle_hist, efficiency_regions_count_1d_alpha_angle_hist_edges, efficiency_regions_count_1d_beta_angle_hist, efficiency_regions_count_1d_beta_angle_hist_edges, efficiency_regions_count_1d_cluster_shape_hist, efficiency_regions_stat_pixel_efficiency_hist, efficiency_regions_count_in_pixel_hits_2d_hist, efficiency_regions_count_in_pixel_tracks_2d_hist, efficiency_regions_count_in_pixel_tracks_with_hit_2d_hist, efficiency_regions_stat_in_pixel_efficiency_2d_hist, efficiency_regions_stat_in_pixel_x_residuals_2d_hist, efficiency_regions_stat_in_pixel_y_residuals_2d_hist, efficiency_regions_stat_in_pixel_residuals_2d_hist, efficiency_regions_stat_in_pixel_charge_2d_hist, efficiency_regions_stat_in_pixel_frame_2d_hist, efficiency_regions_stat_in_pixel_cluster_size_2d_hist, efficiency_regions_count_in_pixel_cluster_shape_2d_hist, efficiency_regions_stat_in_pixel_cluster_shape_2d_hist, efficiency_regions_in_pixel_hist_extent, efficiency_regions_in_pixel_plot_range, efficiency_regions_analyze_cluster_shapes, mask_zero=True, output_pdf=None):
+def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_2d_hist, count_tracks_with_hit_2d_hist, stat_2d_x_residuals_hist, stat_2d_y_residuals_hist, stat_2d_residuals_hist, count_1d_charge_hist, stat_2d_charge_hist, count_1d_frame_hist, stat_2d_cluster_size_hist, count_1d_total_angle_hist, count_1d_total_angle_hist_edges, count_1d_alpha_angle_hist, count_1d_alpha_angle_hist_edges, count_1d_beta_angle_hist, count_1d_beta_angle_hist_edges, stat_2d_frame_hist, stat_2d_total_angle_hist, stat_2d_alpha_angle_hist, stat_2d_beta_angle_hist, stat_2d_efficiency_hist, stat_pixel_efficiency_hist, count_pixel_hits_2d_hist, efficiency, efficiency_chunks, actual_dut_index, dut_extent, hist_extent, plot_range, efficiency_regions, efficiency_regions_names, efficiency_regions_efficiencies, efficiency_regions_count_1d_charge_hist, efficiency_regions_count_1d_frame_hist, efficiency_regions_count_1d_cluster_size_hist, efficiency_regions_count_1d_total_angle_hist, efficiency_regions_count_1d_total_angle_hist_edges, efficiency_regions_count_1d_alpha_angle_hist, efficiency_regions_count_1d_alpha_angle_hist_edges, efficiency_regions_count_1d_beta_angle_hist, efficiency_regions_count_1d_beta_angle_hist_edges, efficiency_regions_count_1d_cluster_shape_hist, efficiency_regions_stat_pixel_efficiency_hist, efficiency_regions_count_in_pixel_hits_2d_hist, efficiency_regions_count_in_pixel_tracks_2d_hist, efficiency_regions_count_in_pixel_tracks_with_hit_2d_hist, efficiency_regions_stat_in_pixel_efficiency_2d_hist, efficiency_regions_stat_in_pixel_x_residuals_2d_hist, efficiency_regions_stat_in_pixel_y_residuals_2d_hist, efficiency_regions_stat_in_pixel_residuals_2d_hist, efficiency_regions_stat_in_pixel_charge_2d_hist, efficiency_regions_stat_in_pixel_frame_2d_hist, efficiency_regions_stat_in_pixel_cluster_size_2d_hist, efficiency_regions_count_in_pixel_cluster_shape_2d_hist, efficiency_regions_stat_in_pixel_cluster_shape_2d_hist, efficiency_regions_efficiencies_chunks, chunk_indices, efficiency_regions_in_pixel_hist_extent, efficiency_regions_in_pixel_plot_range, efficiency_regions_analyze_cluster_shapes, mask_zero=True, output_pdf=None):
     actual_dut = telescope[actual_dut_index]
     if not output_pdf:
         return
@@ -1734,7 +1734,7 @@ def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_
             for region_index, region in enumerate(efficiency_regions):
                 rect = matplotlib.patches.Rectangle(xy=(min(region[0]), min(region[1])), width=np.abs(np.diff(region[0])), height=np.abs(np.diff(region[1])), linewidth=2.0, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
                 ax.add_patch(rect)
-                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiency[region_index] * 100.0)
+                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiencies[region_index] * 100.0)
                 ax.text(np.sum(region[0]) / 2.0, np.sum(region[1]) / 2.0, text, horizontalalignment='center', verticalalignment='center', fontsize=6)
             rect = matplotlib.patches.Rectangle(xy=(min(dut_extent[:2]), min(dut_extent[2:])), width=np.abs(np.diff(dut_extent[:2])), height=np.abs(np.diff(dut_extent[2:])), linewidth=mesh_line_width, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
             ax.add_patch(rect)
@@ -1751,7 +1751,7 @@ def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_
             for region_index, region in enumerate(efficiency_regions):
                 rect = matplotlib.patches.Rectangle(xy=(min(region[0]), min(region[1])), width=np.abs(np.diff(region[0])), height=np.abs(np.diff(region[1])), linewidth=2.0, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
                 ax.add_patch(rect)
-                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiency[region_index] * 100.0)
+                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiencies[region_index] * 100.0)
                 ax.text(np.sum(region[0]) / 2.0, np.sum(region[1]) / 2.0, text, horizontalalignment='center', verticalalignment='center', fontsize=6)
             _ = voronoi_plot_2d(ax=ax, ridge_vertices=ridge_vertices, vertices=vertices, show_points=False, line_width=mesh_line_width, line_alpha=mesh_alpha, line_color=mesh_color)
             rect = matplotlib.patches.Rectangle(xy=(min(dut_extent[:2]), min(dut_extent[2:])), width=np.abs(np.diff(dut_extent[:2])), height=np.abs(np.diff(dut_extent[2:])), linewidth=mesh_line_width, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
@@ -1759,6 +1759,23 @@ def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_
             ax.set_xlim(plot_range[0])
             ax.set_ylim(plot_range[1])
             output_pdf.savefig(fig)
+
+            # Chunk stats for every region
+            for region_index in range(len(efficiency_regions)):
+                fig = Figure()
+                _ = FigureCanvas(fig)
+                ax = fig.add_subplot(111)
+                ax.plot(chunk_indices, np.array(efficiency_regions_efficiencies_chunks[region_index]) * 100.0, label='Region efficiency per chunk')
+                ax.grid()
+                ax.set_ylabel("Efficiency [%]")
+                ax.set_xlabel("Index")
+                ax.set_title('Efficiency per chunk for region %d%s' % (region_index + 1, (": " + efficiency_regions_names[region_index].title()) if efficiency_regions_names[region_index] else ""))
+                ax.legend()
+                output_pdf.savefig(fig)
+                ax.plot(chunk_indices, np.array(efficiency_chunks) * 100.0, label='Global efficiency per chunk')
+                ax.set_ylim(0.0, 100.0)
+                ax.legend()
+                output_pdf.savefig(fig)
 
             for region_index in range(len(efficiency_regions)):
                 fig = Figure()
@@ -1777,7 +1794,7 @@ def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_
                 region = efficiency_regions[region_index]
                 rect = matplotlib.patches.Rectangle(xy=(min(region[0]), min(region[1])), width=np.abs(np.diff(region[0])), height=np.abs(np.diff(region[1])), linewidth=2.0, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
                 ax.add_patch(rect)
-                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiency[region_index] * 100.0)
+                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiencies[region_index] * 100.0)
                 ax.text(np.sum(region[0]) / 2.0, np.sum(region[1]) / 2.0, text, horizontalalignment='center', verticalalignment='center', fontsize=6)
                 rect = matplotlib.patches.Rectangle(xy=(min(dut_extent[:2]), min(dut_extent[2:])), width=np.abs(np.diff(dut_extent[:2])), height=np.abs(np.diff(dut_extent[2:])), linewidth=mesh_line_width, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
                 ax.add_patch(rect)
@@ -1794,7 +1811,7 @@ def efficiency_plots(telescope, hist_2d_edges, count_hits_2d_hist, count_tracks_
                 region = efficiency_regions[region_index]
                 rect = matplotlib.patches.Rectangle(xy=(min(region[0]), min(region[1])), width=np.abs(np.diff(region[0])), height=np.abs(np.diff(region[1])), linewidth=2.0, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
                 ax.add_patch(rect)
-                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiency[region_index] * 100.0)
+                text = 'Region %d%s:\nEfficiency=%.2f%%' % (region_index + 1, (" (" + efficiency_regions_names[region_index] + ")") if efficiency_regions_names[region_index] else "", efficiency_regions_efficiencies[region_index] * 100.0)
                 ax.text(np.sum(region[0]) / 2.0, np.sum(region[1]) / 2.0, text, horizontalalignment='center', verticalalignment='center', fontsize=6)
                 _ = voronoi_plot_2d(ax=ax, ridge_vertices=ridge_vertices, vertices=vertices, show_points=False, line_width=mesh_line_width, line_alpha=mesh_alpha, line_color=mesh_color)
                 rect = matplotlib.patches.Rectangle(xy=(min(dut_extent[:2]), min(dut_extent[2:])), width=np.abs(np.diff(dut_extent[:2])), height=np.abs(np.diff(dut_extent[2:])), linewidth=mesh_line_width, edgecolor=mesh_color, facecolor='none', alpha=mesh_alpha)
